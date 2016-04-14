@@ -1,0 +1,3 @@
+Known bugs:
+Must resize window for plot to scroll smoothly. Not sure why.
+Sometimes when logging a ',' gets left out, so the CSV isnt exactly right. Not sure why
