@@ -119,9 +119,9 @@ class ConfigFrame(ttk.Frame):
                 s = serial.Serial(port=self.parent.variables['COMport'][0:4])
                 s.close()              
                 GraphTopLevel(self.parent)
-            except:
+            except Exception as e:
                 #Otherwise the port isn't available, so error out
-                messagebox.showerror(message='COM port not available')
+                messagebox.showerror(message=('COM port not available: ', e))
     
     def aboutButton(self):
         toplvl = tk.Toplevel()
