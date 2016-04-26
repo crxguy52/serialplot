@@ -24,7 +24,7 @@ you can then run this python script to send data to be plotted in the graph.
 import serial
 
 ser = serial.Serial('/dev/ttyS10',rtscts=True, dsrdtr=True)
-# The length of the payload must match the value in your defaults.py
+# The length of the payload must be less than or equal to the value in your defaults.py
 ser.write("1,-1                                                                           ".encode())
 ```
 
