@@ -19,6 +19,7 @@ import serial.tools.list_ports
 import idlelib.ToolTip as tt
 import pprint
 from defaults import defaults
+import os
 
 class ConfigFrame(ttk.Frame):
     """
@@ -116,7 +117,12 @@ class ConfigFrame(ttk.Frame):
         else:
             try:
                 #Try to open the COM port first to make sure it's available                
-                s = serial.Serial(port=self.parent.variables['COMport'][0:4])
+                if os.name == 'nt':
+                    s = serial.Serial(port=self.parent.variables['COMport'][0:4])
+                else:
+                    first_space = self.parent.variables['COMport'].index(' ')
+                    # Parameters necessary due to https://github.com/pyserial/pyserial/issues/59
+                    s = serial.Serial(port=self.parent.variables['COMport'][0:first_space], rtscts=True, dsrdtr=True)
                 s.close()              
                 GraphTopLevel(self.parent)
             except Exception as e:

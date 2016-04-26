@@ -6,6 +6,7 @@ import sys
 import serial
 import io
 import time
+import os
 
 if sys.version_info[0] < 3:
     #If we're executing with Python 2
@@ -274,13 +275,22 @@ class Graph(ttk.Frame):
         stopbitsdict = {'1':serial.STOPBITS_ONE,
                         '2':serial.STOPBITS_TWO}
         stopbits = stopbitsdict[str(self.root.variables['stopbits'])]
-        port = self.root.variables['COMport'][0:5].strip()
             
         #Open the serial port given the settings, store under the root
-        self.root.ser = serial.Serial(\
-            port=port,\
-            baudrate=str(self.root.variables['baud']),\
-            bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=0.5) 
+        if os.name == 'nt':
+            port = self.root.variables['COMport'][0:5].strip()
+            self.root.ser = serial.Serial(\
+                port=port,\
+                baudrate=str(self.root.variables['baud']),\
+                bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=0.5) 
+        else:
+            first_space = self.root.variables['COMport'].index(' ')
+            port = self.root.variables['COMport'][0:first_space].strip()
+            # Parameters necessary due to https://github.com/pyserial/pyserial/issues/59
+            self.root.ser = serial.Serial(\
+                port=port,\
+                baudrate=str(self.root.variables['baud']),\
+                bytesize=bytesize, parity=parity, stopbits=stopbits, timeout=0.5, rtscts=True, dsrdtr=True) 
         io.DEFAULT_BUFFER_SIZE = 5000
             
         #Purge the buffer of any previous data
