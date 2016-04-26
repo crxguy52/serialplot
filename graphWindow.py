@@ -25,7 +25,7 @@ else:
     import tkinter as tk
     from tkinter import ttk
     from tkinter import messagebox    
-    serialqueue = serial.Serial.in_waiting    
+    serialqueue = serial.Serial.inWaiting    
 
 
 class GraphTopLevel:
