@@ -1,3 +1,8 @@
+'''
+ConfigFrame is a class that gets packed into the root window. Takes config
+settings from the user and passes them into the approrpate functions when the
+Go button is pressed
+'''
 import sys
 if sys.version_info[0] < 3:
     #If we're executing with Python 2
@@ -641,5 +646,4 @@ class CreateToolTip(object):
             
 #If this script is executed, just run the main script
 if __name__ == '__main__':
-    import os
     os.system("serialplot.py")

@@ -1,10 +1,11 @@
-#! python3
-# -*- coding: utf-8 -*-
 """
-Program to plot serial data in real time.
+Program to plot serial data in real time. Once the root window is created and 
+configured, all other actions occur within the ConfigFrame and GraphTopLevel
 """
+
 import matplotlib
 matplotlib.use('TkAgg')
+import os
 #import sys
 #sys.dont_write_bytecode = True
 
@@ -32,7 +33,8 @@ root.geometry('{}x{}+{}+{}'.format(winwidth, winheight, winposx, winposy))
 
 #Set the title and icon and stuff
 root.title('Serial Plotter Configuration')
-root.iconbitmap(default='graphs.ico')
+if os.name == 'nt':
+    root.iconbitmap(default='graphs.ico')
 root.resizable(width=False, height=False)
 
 #Unhide the window now that it's configured

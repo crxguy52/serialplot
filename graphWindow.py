@@ -1,3 +1,8 @@
+'''
+The GraphTopLevel is a ttk.Frame class that gets packd into the root window when
+the configuration is complete. All the graph updating takes place in updateGraph
+'''
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
@@ -166,8 +171,6 @@ class Graph(ttk.Frame):
                     offset = float(self.root.variables[key][5])
                     datalbl = self.root.variables[key][0]
                     self.root.dataMultOff[data] = [multiplier, offset, datalbl]
-                    
-        #print self.root.dataMultOff
             
         #Sort they keys, so we are always ascending
         keylst = sorted(list(self.root.variables.keys()))
@@ -254,7 +257,6 @@ class Graph(ttk.Frame):
         for line in self.root.lines:
             line.set_data([], [])     
         return self.root.lines
-
 
 
     def openSerial(self):
@@ -473,5 +475,4 @@ class StatusBar(ttk.Frame):
         
 #If this script is executed, just run the main script
 if __name__ == '__main__':
-    import os
     os.system("serialplot.py")
