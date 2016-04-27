@@ -6,11 +6,8 @@ configured, all other actions occur within the ConfigFrame and GraphTopLevel
 import matplotlib
 matplotlib.use('TkAgg')
 import os
-#import sys
-#sys.dont_write_bytecode = True
 
 from cfgWindow import *
-from graphWindow import *
 
 root = tk.Tk()
 

@@ -296,12 +296,12 @@ class Graph(ttk.Frame):
         io.DEFAULT_BUFFER_SIZE = 5000
             
         #Purge the buffer of any previous data
-        if sys.version_info[0] < 3:
-            #If we're executing with Python 2
+        if float(serial.VERSION[0:3]) < 3:
+            #If we're executing with pySerial 2.x
             serial.Serial.flushInput(self.root.ser)
             serial.Serial.flushOutput(self.root.ser)
         else:
-            #Otherwise we're using Python 3
+            #Otherwise we're using pySerial 3.x
             serial.Serial.reset_input_buffer(self.root.ser)
             serial.Serial.reset_output_buffer(self.root.ser)
             
