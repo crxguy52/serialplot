@@ -21,7 +21,6 @@ else:
 
 from graphWindow import *  
 import serial.tools.list_ports  
-import idlelib.ToolTip as tt
 import pprint
 from defaults import defaults
 import os
@@ -78,7 +77,6 @@ class ConfigFrame(ttk.Frame):
         #Create a Graph! and About buttons
         GObut = ttk.Button(self, text='Go!', command=self.goButton)
         GObut.grid(row=6, column = 0, sticky = 'we')
-        #GObut.tip = tt.ListboxToolTip(GObut, ["Run this motherfucker"])
         ABOUTbut = ttk.Button(self, text='About', command=self.aboutButton) 
         ABOUTbut.grid(row = 6, column = 1, sticky = 'we')
         
@@ -111,11 +109,6 @@ class ConfigFrame(ttk.Frame):
                     self.parent.variables[key].append(self.TKvariables[key][val].get())
             else:
                 self.parent.variables.update({key:self.TKvariables[key].get()})
-                
-        #msg = ''
-        #for key in self.parent.variables:
-        #    msg += str(key)+':'+str(self.parent.variables[key])+'\n'
-        #messagebox.showinfo(message=msg)    
         
         if self.parent.variables['COMport'] == '':
             messagebox.showerror(message='Select a COM port!')
@@ -128,7 +121,7 @@ class ConfigFrame(ttk.Frame):
                     first_space = self.parent.variables['COMport'].index(' ')
                     # Parameters necessary due to https://github.com/pyserial/pyserial/issues/59
                     s = serial.Serial(port=self.parent.variables['COMport'][0:first_space], rtscts=True, dsrdtr=True)
-                s.close()              
+                s.close()            
                 GraphTopLevel(self.parent)
             except Exception as e:
                 #Otherwise the port isn't available, so error out
@@ -281,10 +274,6 @@ class DataTab(ttk.Frame):
         datalabel = ttk.Label(self, text='Variables per line')
         databox = ttk.Combobox(self, width=8, values = self.datalist, \
                         textvariable=self.controller.TKvariables['datalength'])
-        tt.tip = tt.ListboxToolTip(datalabel,\
-        ["The number of", "TKvariables coming", 'in per line. ', 'for example, ',\
-        't, data1, data2;', 'would have 3 TKvariables', 'and be terminated', \
-        'by a semicolon'])
         CreateToolTip(datalabel,\
         "The numbder of variables per line. "
         "A line is a series of variables seperated by a comma, and terminated by a \\n character. "

@@ -86,8 +86,8 @@ class GraphFrame(ttk.Frame):
         self.root.variables.update({'lastline':tk.StringVar(value='Nothing Recieved')})
         self.root.variables.update({'refreshrate':tk.StringVar(value=0)})
         self.root.count = 0     #the number of lines we've recieved
-        self.root.starttime = 0 #time when we started
-
+        self.root.starttime = 0 #time when we started      
+        
         StatusBar(self, self.root).pack(fill='x', side='bottom')        
         Graph(self, self.root).pack(fill='both', expand=True, side='top')
         
@@ -200,15 +200,20 @@ class Graph(ttk.Frame):
         for ax in range(1,numgraphs + 1):
             handles, labels = self.root.ax[str(ax)].get_legend_handles_labels()
             self.root.ax[str(ax)].legend(handles=handles, loc='upper left')
-                
+            
         #Configure and open the serial port
         self.openSerial()
-        
+
+        #TODO: For some unknown reason, when running serialplot.py on windows
+        #with python3, the program freezes at canvas.show(). However,
+        #(This is the weird part) if the graphwindow.py or configwindow.py is
+        #run first, which in turn calls serialplot.py, there is no issue and it
+        #runs fine. Odd.
+   
         #Create the initial axis objects and show the figure
         canvas = FigureCanvasTkAgg(self.root.f, master=self)  
         canvas.show()
         canvas.get_tk_widget().pack(side='top', fill='both', expand=True)
-
       
         #Start the timer for estimated update frequency
         time.clock()      
@@ -236,6 +241,8 @@ class Graph(ttk.Frame):
         #Set up the graph update routine
         updatefreq = float(self.root.variables['refreshfreq']) #Hz 
         interval = int((1/updatefreq)*1000)
+        
+              
         
         try:
             self.root.ani = animation.FuncAnimation(self.root.f, self.updateGraph,\
