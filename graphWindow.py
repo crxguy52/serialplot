@@ -322,7 +322,7 @@ class Graph(ttk.Frame):
         #the buffer until we're below the threshold
         while int(serialqueue(self.root.ser)) >= int(self.root.variables['maxlength']):
             #Read a line
-            val = str(self.root.ser.readline())
+            val = self.root.ser.readline().decode('utf-8')
             val = val.replace('\n', '')
             val = val.replace('\r', '')
                 
